@@ -6,9 +6,9 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-title                    : "Lorem ipsum"
-description              : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. "
-repository               : "RayeRen/acad-homepage.github.io"
+title                    : "Rui Zhou (周睿)"
+description              : "Master Student at University of Zurich and ETH Zurich"
+repository               : "RuiZhou-cn/RuiZhou-cn.github.io"
 google_scholar_stats_use_cdn : true
 
 # google analytics
@@ -21,15 +21,16 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 
 # Site Author
 author:
-  name             : "Lorem ipsum"
-  avatar           : "images/android-chrome-512x512.png"
-  bio              : "Lorem ipsum College"
-  location         : "Beijing, China"
+  name             : "Rui Zhou (周睿)"
+  avatar           : "images/ruizhou_photo.jpg"
+  bio              : "University of Zurich and ETH Zurich"
+  location         : "Zurich, Switzerland"
   employer         :
   pubmed           : 
-  googlescholar    : "https://scholar.google.com/citations?user=YOUR_GOOGLE_SCHOLAR_ID"
-  email            : "Lorem@ipsum.com"
-  researchgate     :  # e.g., "https://www.researchgate.net/profile/yourprofile"
+  googlescholar    : "https://scholar.google.com/citations?user=SCHOLAR_ID&user=C3Bk_m8AAAAJ"
+  email            : "rui.zhou2@uzh.ch"
+  researchgate     : "https://www.researchgate.net/profile/Rui-Zhou-131?ev=hdr_xprf" # e.g., "https://www.researchgate.net/profile/yourprofile"
+  cv               : "files/cv.pdf"
   uri              :
   bitbucket        :
   codepen          :
@@ -37,15 +38,15 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : # e.g., "github username"
+  github           : RuiZhou-cn # e.g., "github username"
   google_plus      :
   keybase          :
   instagram        :
   impactstory      : # e.g., "https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : # e.g., "linkedin username"
+  linkedin         : rui-zhou-7b12a8303 # e.g., "linkedin username"
   dblp             : # e.g., "https://dblp.org/pid/xx/xxxx.html"
-  orcid            : # e.g., "https://orcid.org/xxxx"
+  orcid            : "https://orcid.org/0009-0007-7813-5107" # e.g., "https://orcid.org/xxxx"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
