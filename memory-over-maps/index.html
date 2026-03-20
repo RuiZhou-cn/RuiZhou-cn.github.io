@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Memory Over Maps: 3D Object Localization Without Reconstruction">
+  <meta name="keywords" content="Object Localization, Robot Navigation, Visual Memory, 3D Reconstruction">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Memory Over Maps: 3D Object Localization Without Reconstruction</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors a {
+      color: hsl(204, 86%, 53%) !important;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+    }
+
+    .publication-venue {
+      color: #555;
+      width: fit-content;
+      font-weight: bold;
+    }
+
+    .link-block a {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .teaser .hero-body {
+      padding-top: 0;
+      padding-bottom: 3rem;
+    }
+
+    .teaser {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-video {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      border-radius: 10px !important;
+    }
+
+    .publication-video iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .method-image {
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Title & Authors -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="white-space: nowrap;">Memory Over Maps:</h1>
+          <h1 class="title is-2 publication-title">3D Object Localization Without Reconstruction</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ruizhou-cn.github.io/">Rui&nbsp;Zhou</a><sup>1*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              Xander&nbsp;Yap<sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              Jianwen&nbsp;Cao<sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://allison-lau.vercel.app/">Allison&nbsp;Lau</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://boysun045.github.io/boysun-website/">Boyang&nbsp;Sun</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://cvg.ethz.ch/team/Prof-Dr-Marc-Pollefeys">Marc&nbsp;Pollefeys</a><sup>2,3</sup></span>
+          </div>
+          <div class="column is-full_width">
+            <h2 class="is-size-6"><sup>*</sup>Equal contribution</h2>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Zurich</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>ETH Zurich</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>3</sup>Microsoft</span>
+          </div>
+
+          <!-- <div class="publication-venue">IROS 2026</div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- TODO: Update link when available -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- TODO: Update with YouTube video link -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- TODO: Update with GitHub repo link -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser Image -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/teaser.jpg" alt="Teaser: Image-based target localization without 3D reconstruction" class="method-image">
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p style="background-color: #f5f5f5; padding: 12px 16px; border-left: 4px solid #363636; border-radius: 4px;">
+            <b style="color: #000;">TL;DR:</b> <span style="color: #000;">We skip building 3D maps entirely &mdash; instead, we store only posed RGB-D keyframes and use fast embedding retrieval + VLM re-ranking to locate objects on-demand in 3D via depth backprojection, achieving state-of-the-art object-goal navigation with <b>100&times; faster scene indexing</b> and far less storage than reconstruction-based methods.</span>
+          </p>
+          <p>
+            Target localization is a prerequisite for embodied tasks such as navigation and manipulation.
+            Conventional approaches rely on constructing explicit 3D scene representations to enable target
+            localization, such as point clouds, voxel grids, or scene graphs. While effective, these pipelines
+            incur substantial mapping time, storage overhead, and scalability limitations. Recent advances in
+            vision-language models suggest that rich semantic reasoning can be performed directly on 2D
+            observations, raising a fundamental question: <i>is a complete 3D scene reconstruction necessary
+            for object localization?</i>
+          </p>
+          <p>
+            In this work, we revisit object localization and propose a <b>map-free pipeline</b> that stores only
+            posed RGB-D keyframes as a lightweight visual memory &mdash; without constructing any global 3D
+            representation of the scene. At query time, our method retrieves candidate views, re-ranks them
+            with a vision-language model, and constructs a sparse, on-demand 3D estimate of the queried target
+            through depth backprojection and multi-view fusion. Compared to reconstruction-based pipelines,
+            this design drastically reduces preprocessing cost, enabling scene indexing that is <b>over two orders
+            of magnitude faster</b> to build while using substantially less storage. We further validate the
+            localized targets on downstream object-goal navigation tasks. Despite requiring no task-specific
+            training, our approach achieves strong performance across multiple benchmarks, demonstrating that
+            direct reasoning over image-based scene memory can effectively replace dense 3D reconstruction
+            for object-centric robot navigation.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <!-- TODO: Replace VIDEO_ID with your YouTube video ID -->
+          <iframe src="https://www.youtube.com/embed/"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Method Overview -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method Overview</h2>
+    <img src="static/images/method.jpg" alt="Method overview pipeline" class="method-image">
+    <div class="content has-text-justified" style="margin-top: 1rem;">
+      <p>
+        <b>Method overview.</b> Given a query and posed RGB-D keyframes:
+        <b>(1) Retrieval:</b> SigLIP2 embeddings indexed with FAISS retrieve top-<i>K</i> candidates.
+        <b>(2) VLM Re-Rank:</b> a VLM filters false positives and promotes true matches.
+        <b>(3) 3D Localization:</b> SAM 3 segments the target; masked depth is backprojected, HDBSCAN removes outliers,
+        and multi-view fusion produces a 3D goal estimate. No global 3D map is built.
+        <b>(4) Navigation:</b> a PointNav policy navigates directly to the goal.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{zhou2026memoryovermaps,
+  title     = {Memory Over Maps: 3D Object Localization Without Reconstruction},
+  author    = {Zhou, Rui and Yap, Xander and Cao, Jianwen and Lau, Allison and Sun, Boyang and Pollefeys, Marc},
+  booktitle = {arXiv preprint},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            This webpage template is from <a href="https://nerfies.github.io/">Nerfies</a>.
+            We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

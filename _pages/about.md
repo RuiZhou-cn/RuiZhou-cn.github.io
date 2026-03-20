@@ -18,14 +18,15 @@ redirect_from:
 <span class='anchor' id='about-me'></span>
 
 # About Me
-My name is Rui Zhou (周睿). I am currently a master student at University of Zurich and ETH Zurich in Computer Science.
-I obtained my Bachelor degree at [Beijing Institute of Technology](https://english.bit.edu.cn).
-My research interest includes computer vision and robotics.
+My name is Rui Zhou (周睿). I am currently a master's student at [University of Zurich](https://www.uzh.ch/en.html) and [ETH Zurich](https://ethz.ch/en.html) in Computer Science.
+I obtained my bachelor's degree at [Beijing Institute of Technology](https://english.bit.edu.cn). I completed my bachelor's thesis at the [Computer Vision Group at RWTH Aachen University](https://www.vision.rwth-aachen.de/), under the supervision of [Prof. Dr. Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/).
+My research interests include computer vision and robotics.
 
 <!-- My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=C3Bk_m8AAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=C3Bk_m8AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>). -->
 
 
 # 🔥 News
+<!-- - *2026.03*: &nbsp;🎉🎉 Our paper "In Plain Sight" is available on arXiv! -->
 - *2025.01*: &nbsp;🎉🎉 Our paper Oodis is accepted to ICRA 2025!
 - *2023.07*: &nbsp;🎉🎉 Our paper KDSCINet is accepted to ICONIP 2023!
 
@@ -35,13 +36,13 @@ My research interest includes computer vision and robotics.
 
 # 📖 Educations
 - *2024.06 - Present*, Graduate, Department of Computer Science, University of Zurich and ETH Zurich, Zurich, Switzerland.
-- *2020.09 - 2024.06*, Undergraduate, School of Computer Science & Technology，Beijing Institute of Technology, Beijing, China.
+- *2020.09 - 2024.06*, Undergraduate, School of Computer Science & Technology, Beijing Institute of Technology, Beijing, China.
 
 <!-- # 💬 Invited Talks
 - *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
 - *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 
-# 📝 Publications 
+# 📝 Publications
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICRA 2025</div><img src='images/oodis_teaser.jpeg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
@@ -79,4 +80,4 @@ My research interest includes computer vision and robotics.
 </div> -->
 
 # 💻 Internships
-- *2022.07 - 2022.08*, [KunlunDigital TechnologyCo., Ltd ](https://www.klszkj.com/en/#/home), Beijing, China.
+- *2022.06 - 2022.08*, [Kunlun Digital Technology Co., Ltd](https://www.klszkj.com/en/#/home), Beijing, China.
