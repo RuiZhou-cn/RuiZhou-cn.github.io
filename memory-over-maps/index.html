@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +18,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- model-viewer for interactive 3D -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
   <style>
     body {
@@ -83,6 +89,256 @@
       display: block;
       margin: 0 auto;
     }
+
+    /* ===== Qualitative Visualization Styles ===== */
+
+    .model-viewer-container {
+      width: 100%;
+      height: 600px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .model-viewer-container model-viewer {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+    }
+
+    .viewer-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: rgba(38, 70, 126, 0.85);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      z-index: 10;
+      user-select: none;
+      max-width: calc(100% - 40px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Scene selector bar */
+    .scene-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .scene-bar label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #363636;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+    }
+
+    .scene-dropdown {
+      font-size: 15px;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 2px solid #dbdbdb;
+      background: #fff;
+      color: #363636;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.25s;
+      min-width: 240px;
+    }
+
+    .scene-dropdown:hover,
+    .scene-dropdown:focus {
+      border-color: #3273dc;
+    }
+
+    /* Scene mesh button (sits next to dropdown) */
+    .scene-mesh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 2px solid #48c774;
+      background: #fff;
+      color: #48c774;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+    }
+
+    .scene-mesh-btn:hover {
+      background: #effaf3;
+      color: #257942;
+    }
+
+    .scene-mesh-btn.query-active {
+      background: #48c774;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(72, 199, 116, 0.25);
+    }
+
+    /* Query controls area */
+    .query-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0 20px;
+    }
+
+    /* Query pill buttons */
+    .query-pill {
+      display: inline-block;
+      padding: 8px 20px;
+      border: 2px solid #dbdbdb;
+      background: #fff;
+      color: #363636;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* Standalone pill (rounded) */
+    .query-pill.query-standalone {
+      border-radius: 20px;
+    }
+
+    .query-pill:hover {
+      border-color: #79b4f2;
+      color: #3273dc;
+      background: #f0f7ff;
+    }
+
+    .query-pill.query-active {
+      background: #3273dc;
+      color: #fff;
+      border-color: #3273dc;
+      box-shadow: 0 2px 8px rgba(50, 115, 220, 0.3);
+    }
+
+    /* Query group: label + segmented button bar */
+    .query-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .query-group-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* Segmented button bar (connected pills) */
+    .query-segment {
+      display: inline-flex;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .query-segment .query-pill {
+      border-radius: 0;
+      margin-left: -2px;  /* overlap borders */
+      position: relative;
+    }
+
+    .query-segment .query-pill:first-child {
+      border-radius: 20px 0 0 20px;
+      margin-left: 0;
+    }
+
+    .query-segment .query-pill:last-child {
+      border-radius: 0 20px 20px 0;
+    }
+
+    .query-segment .query-pill:only-child {
+      border-radius: 20px;
+    }
+
+    .query-segment .query-pill.query-active {
+      z-index: 1;  /* active pill on top of overlapping borders */
+    }
+
+    .query-segment .query-pill:hover {
+      z-index: 1;
+    }
+
+    /* Ungrouped row */
+    .query-ungrouped {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.7);
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .loading-overlay.is-loading {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .loading-overlay .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #3273dc;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .scene-thumbnail-container img,
+      .scene-thumbnail-container video {
+        height: 90px;
+      }
+      .model-viewer-container {
+        height: 350px;
+      }
+      .query-pill {
+        font-size: 13px;
+        padding: 6px 14px;
+      }
+    }
   </style>
 </head>
 
@@ -99,7 +355,7 @@
             <span class="author-block">
               <a href="https://ruizhou-cn.github.io/">Rui&nbsp;Zhou</a><sup>1*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
-              Xander&nbsp;Yap<sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://xanderyap.com/">Xander&nbsp;Yap</a><sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
               Jianwen&nbsp;Cao<sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
@@ -160,11 +416,68 @@
   </div>
 </section>
 
-<!-- Teaser Image -->
-<section class="hero teaser">
+<!-- Qualitative Visualization -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+      <h2 class="title is-3">Qualitative Visualization</h2>
+      <div class="content">
+        <p>
+          Interactive 3D localization results on different scenes. Select a scene below, then choose a text query to visualize the localization output.
+        </p>
+      </div>
+
+      <!-- Scene selector bar -->
+      <div class="scene-bar">
+        <label for="scene-select">Scene:</label>
+        <select id="scene-select" class="scene-dropdown">
+          <!-- Populated by JS -->
+        </select>
+        <span class="scene-mesh-btn query-active" id="scene-mesh-btn">Scene Mesh</span>
+      </div>
+
+      <!-- Query Pills -->
+      <div class="query-controls" id="query-selector">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- 3D Viewer -->
+      <div class="model-viewer-container" id="viewer-wrapper">
+        <div class="viewer-label" id="viewer-label">Scene &mdash; Query</div>
+        <div class="loading-overlay" id="loading-overlay">
+          <div class="spinner"></div>
+        </div>
+        <model-viewer id="qualitative-viewer"
+                      alt="3D Localization Result"
+                      loading="eager"
+                      touch-action="pan-y"
+                      environment-image="legacy"
+                      camera-orbit="180deg 70deg 75%"
+                      field-of-view="30deg"
+                      min-field-of-view="10deg"
+                      max-field-of-view="90deg"
+                      zoom-sensitivity="0.5"
+                      camera-controls
+                      disable-tap
+                      min-camera-orbit="auto auto auto"
+                      max-camera-orbit="auto auto 500%"
+                      interaction-prompt="none"
+                      shadow-intensity="0"
+                      disable-shadow
+                      style="width: 100%; height: 100%; background: #ffffff;">
+        </model-viewer>
+      </div>
+
+  </div>
+</section>
+
+<!-- Video -->
+<section class="section">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <img src="static/images/teaser.jpg" alt="Teaser: Image-based target localization without 3D reconstruction" class="method-image">
+    <h2 class="title is-3 has-text-centered">Video</h2>
+    <div class="publication-video">
+      <!-- TODO: Replace VIDEO_ID with your YouTube video ID -->
+      <iframe src="https://www.youtube.com/embed/"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 </section>
@@ -172,51 +485,34 @@
 <!-- Abstract -->
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p style="background-color: #f5f5f5; padding: 12px 16px; border-left: 4px solid #363636; border-radius: 4px;">
-            <b style="color: #000;">TL;DR:</b> <span style="color: #000;">We skip building 3D maps entirely &mdash; instead, we store only posed RGB-D keyframes and use fast embedding retrieval + VLM re-ranking to locate objects on-demand in 3D via depth backprojection, achieving state-of-the-art object-goal navigation with <b>100&times; faster scene indexing</b> and far less storage than reconstruction-based methods.</span>
-          </p>
-          <p>
-            Target localization is a prerequisite for embodied tasks such as navigation and manipulation.
-            Conventional approaches rely on constructing explicit 3D scene representations to enable target
-            localization, such as point clouds, voxel grids, or scene graphs. While effective, these pipelines
-            incur substantial mapping time, storage overhead, and scalability limitations. Recent advances in
-            vision-language models suggest that rich semantic reasoning can be performed directly on 2D
-            observations, raising a fundamental question: <i>is a complete 3D scene reconstruction necessary
-            for object localization?</i>
-          </p>
-          <p>
-            In this work, we revisit object localization and propose a <b>map-free pipeline</b> that stores only
-            posed RGB-D keyframes as a lightweight visual memory &mdash; without constructing any global 3D
-            representation of the scene. At query time, our method retrieves candidate views, re-ranks them
-            with a vision-language model, and constructs a sparse, on-demand 3D estimate of the queried target
-            through depth backprojection and multi-view fusion. Compared to reconstruction-based pipelines,
-            this design drastically reduces preprocessing cost, enabling scene indexing that is <b>over two orders
-            of magnitude faster</b> to build while using substantially less storage. We further validate the
-            localized targets on downstream object-goal navigation tasks. Despite requiring no task-specific
-            training, our approach achieves strong performance across multiple benchmarks, demonstrating that
-            direct reasoning over image-based scene memory can effectively replace dense 3D reconstruction
-            for object-centric robot navigation.
-          </p>
-        </div>
-      </div>
+    <h2 class="title is-3 has-text-centered">Abstract</h2>
+    <div class="content has-text-justified">
+      <p style="background-color: #f5f5f5; padding: 12px 16px; border-left: 4px solid #363636; border-radius: 4px;">
+        <b style="color: #000;">TL;DR:</b> <span style="color: #000;">We skip building 3D maps entirely &mdash; instead, we store only posed RGB-D keyframes and use fast embedding retrieval + VLM re-ranking to locate objects on-demand in 3D via depth backprojection, achieving state-of-the-art object-goal navigation with <b>100&times; faster scene indexing</b> and far less storage than reconstruction-based methods.</span>
+      </p>
+      <p>
+        Target localization is a prerequisite for embodied tasks such as navigation and manipulation.
+        Conventional approaches rely on constructing explicit 3D scene representations to enable target
+        localization, such as point clouds, voxel grids, or scene graphs. While effective, these pipelines
+        incur substantial mapping time, storage overhead, and scalability limitations. Recent advances in
+        vision-language models suggest that rich semantic reasoning can be performed directly on 2D
+        observations, raising a fundamental question: <i>is a complete 3D scene reconstruction necessary
+        for object localization?</i>
+      </p>
+      <p>
+        In this work, we revisit object localization and propose a <b>map-free pipeline</b> that stores only
+        posed RGB-D keyframes as a lightweight visual memory &mdash; without constructing any global 3D
+        representation of the scene. At query time, our method retrieves candidate views, re-ranks them
+        with a vision-language model, and constructs a sparse, on-demand 3D estimate of the queried target
+        through depth backprojection and multi-view fusion. Compared to reconstruction-based pipelines,
+        this design drastically reduces preprocessing cost, enabling scene indexing that is <b>over two orders
+        of magnitude faster</b> to build while using substantially less storage. We further validate the
+        localized targets on downstream object-goal navigation tasks. Despite requiring no task-specific
+        training, our approach achieves strong performance across multiple benchmarks, demonstrating that
+        direct reasoning over image-based scene memory can effectively replace dense 3D reconstruction
+        for object-centric robot navigation.
+      </p>
     </div>
-
-    <!-- Video -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <!-- TODO: Replace VIDEO_ID with your YouTube video ID -->
-          <iframe src="https://www.youtube.com/embed/"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -269,6 +565,288 @@
     </div>
   </div>
 </footer>
+
+<script>
+// ===================================================================
+// Auto-detect scenes & queries from GLB files (populated by Jekyll)
+//
+// Naming convention:
+//   {dataset}_{sceneId}.glb                       → raw scene
+//   {dataset}_{sceneId}_{queryId}.glb             → standalone query
+//   {dataset}_{sceneId}--{group}--{queryId}.glb   → grouped query (for comparison)
+// ===================================================================
+const GLB_FILES = [
+  {%- for file in site.static_files -%}
+    {%- if file.extname == '.glb' and file.path contains '/memory-over-maps/static/glb/' -%}
+  "{{ file.name }}",
+    {%- endif -%}
+  {%- endfor -%}
+];
+
+function titleCase(str) {
+  return str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function buildScenesFromFiles(files) {
+  const names = files.map(f => f.replace('.glb', ''));
+  const sceneMap = {};  // "dataset_sceneId" → scene object
+  const scenes = [];
+  const grouped = [];   // names with "--"
+  const ungrouped = []; // names without "--"
+
+  for (const name of names) {
+    if (name.includes('--')) grouped.push(name);
+    else ungrouped.push(name);
+  }
+
+  // Sort ungrouped by length so raw scenes (shorter) are found first
+  ungrouped.sort((a, b) => a.length - b.length);
+
+  // Pass 1: raw scenes and standalone queries
+  for (const name of ungrouped) {
+    let matched = false;
+    for (const scene of scenes) {
+      const prefix = scene.dataset + '_' + scene.sceneId + '_';
+      if (name.startsWith(prefix)) {
+        const qid = name.slice(prefix.length);
+        scene.queries.push({ id: qid, label: titleCase(qid), group: null });
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      const i = name.indexOf('_');
+      const key = name;
+      const scene = {
+        dataset: name.slice(0, i),
+        sceneId: name.slice(i + 1),
+        label: name.slice(0, i).toUpperCase() + ' \u2013 ' + name.slice(i + 1),
+        queries: []
+      };
+      scenes.push(scene);
+      sceneMap[key] = scene;
+    }
+  }
+
+  // Pass 2: grouped queries (with --)
+  for (const name of grouped) {
+    const parts = name.split('--');
+    if (parts.length < 3) continue;
+    const sceneKey = parts[0];
+    const groupName = parts[1];
+    const queryId = parts.slice(2).join('--');
+
+    let scene = sceneMap[sceneKey];
+    if (!scene) {
+      const i = sceneKey.indexOf('_');
+      scene = {
+        dataset: sceneKey.slice(0, i),
+        sceneId: sceneKey.slice(i + 1),
+        label: sceneKey.slice(0, i).toUpperCase() + ' \u2013 ' + sceneKey.slice(i + 1),
+        queries: []
+      };
+      scenes.push(scene);
+      sceneMap[sceneKey] = scene;
+    }
+    scene.queries.push({ id: queryId, label: titleCase(queryId), group: groupName });
+  }
+
+  return scenes;
+}
+
+const SCENES = buildScenesFromFiles(GLB_FILES);
+
+// ===================================================================
+// State
+// ===================================================================
+let currentSceneIdx = 0;
+let currentQueryIdx = -1; // -1 = raw scene mesh
+
+// ===================================================================
+// DOM refs
+// ===================================================================
+const viewer = document.getElementById('qualitative-viewer');
+const viewerLabel = document.getElementById('viewer-label');
+const loadingOverlay = document.getElementById('loading-overlay');
+const sceneSelect = document.getElementById('scene-select');
+const querySelectorContainer = document.getElementById('query-selector');
+
+// ===================================================================
+// Build GLB path
+// ===================================================================
+function glbPath(scene, query) {
+  const base = `${scene.dataset}_${scene.sceneId}`;
+  if (!query) return `static/glb/${base}.glb`;
+  if (query.group) return `static/glb/${base}--${query.group}--${query.id}.glb`;
+  return `static/glb/${base}_${query.id}.glb`;
+}
+
+// ===================================================================
+// Update the viewer
+// ===================================================================
+let _viewerSeq = 0;
+
+function updateViewer() {
+  const seq = ++_viewerSeq;
+  const scene = SCENES[currentSceneIdx];
+  const query = currentQueryIdx >= 0 ? scene.queries[currentQueryIdx] : null;
+
+  loadingOverlay.classList.add('is-loading');
+  viewerLabel.textContent = query
+    ? `${scene.label}  \u2014  \u201c${query.label}\u201d`
+    : `${scene.label}  \u2014  Scene Mesh`;
+
+  const src = glbPath(scene, query);
+
+  if (seq !== _viewerSeq) return; // stale request
+
+  viewer.setAttribute('src', src);
+}
+
+viewer.addEventListener('load', () => {
+  loadingOverlay.classList.remove('is-loading');
+  viewer.cameraOrbit = "180deg 70deg 75%";
+  viewer.jumpCameraToGoal();
+});
+viewer.addEventListener('error', () => loadingOverlay.classList.remove('is-loading'));
+
+// ===================================================================
+// Helpers for pill selection
+// ===================================================================
+const sceneMeshBtn = document.getElementById('scene-mesh-btn');
+
+function clearAllActive() {
+  sceneMeshBtn.classList.remove('query-active');
+  querySelectorContainer.querySelectorAll('.query-pill').forEach(p => {
+    p.classList.remove('query-active');
+  });
+}
+
+function syncActiveState() {
+  clearAllActive();
+  if (currentQueryIdx === -1) {
+    sceneMeshBtn.classList.add('query-active');
+  } else {
+    const pills = querySelectorContainer.querySelectorAll('.query-pill');
+    pills.forEach(p => {
+      if (parseInt(p.dataset.idx) === currentQueryIdx) p.classList.add('query-active');
+    });
+  }
+}
+
+function makePill(label, idx) {
+  const pill = document.createElement('span');
+  pill.className = 'query-pill';
+  pill.textContent = label;
+  pill.dataset.idx = idx;
+  if (idx === currentQueryIdx) pill.classList.add('query-active');
+
+  pill.addEventListener('click', () => {
+    if (idx === currentQueryIdx) return;
+    currentQueryIdx = idx;
+    syncActiveState();
+    updateViewer();
+  });
+  return pill;
+}
+
+// Scene Mesh button click
+sceneMeshBtn.addEventListener('click', () => {
+  if (currentQueryIdx === -1) return;
+  currentQueryIdx = -1;
+  syncActiveState();
+  updateViewer();
+});
+
+// ===================================================================
+// Build scene dropdown
+// ===================================================================
+function buildSceneDropdown() {
+  sceneSelect.innerHTML = '';
+  SCENES.forEach((scene, idx) => {
+    const option = document.createElement('option');
+    option.value = idx;
+    option.textContent = scene.label;
+    sceneSelect.appendChild(option);
+  });
+  sceneSelect.value = currentSceneIdx;
+
+  sceneSelect.addEventListener('change', () => {
+    currentSceneIdx = parseInt(sceneSelect.value);
+    currentQueryIdx = -1;
+    buildQueryPills();
+    syncActiveState();
+    updateViewer();
+  });
+}
+
+// ===================================================================
+// Build query pills with grouping
+// ===================================================================
+function buildQueryPills() {
+  querySelectorContainer.innerHTML = '';
+  const scene = SCENES[currentSceneIdx];
+
+  // Separate queries into groups and ungrouped
+  const groupOrder = [];
+  const groups = {};     // groupName → [{query, idx}]
+  const ungrouped = [];  // [{query, idx}]
+
+  scene.queries.forEach((query, idx) => {
+    if (query.group) {
+      if (!groups[query.group]) {
+        groups[query.group] = [];
+        groupOrder.push(query.group);
+      }
+      groups[query.group].push({ query, idx });
+    } else {
+      ungrouped.push({ query, idx });
+    }
+  });
+
+  // Render grouped queries as segmented button bars
+  for (const groupName of groupOrder) {
+    const items = groups[groupName];
+    const row = document.createElement('div');
+    row.className = 'query-group';
+
+    const label = document.createElement('span');
+    label.className = 'query-group-label';
+    label.textContent = titleCase(groupName);
+    row.appendChild(label);
+
+    const segment = document.createElement('div');
+    segment.className = 'query-segment';
+    for (const { query, idx } of items) {
+      segment.appendChild(makePill(query.label, idx));
+    }
+    row.appendChild(segment);
+
+    querySelectorContainer.appendChild(row);
+  }
+
+  // Render ungrouped queries as standalone rounded pills
+  if (ungrouped.length > 0) {
+    const row = document.createElement('div');
+    row.className = 'query-ungrouped';
+    for (const { query, idx } of ungrouped) {
+      const pill = makePill(query.label, idx);
+      pill.classList.add('query-standalone');
+      row.appendChild(pill);
+    }
+    querySelectorContainer.appendChild(row);
+  }
+}
+
+// ===================================================================
+// Initialize
+// ===================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  buildSceneDropdown();
+  buildQueryPills();
+  updateViewer();
+});
+</script>
 
 </body>
 </html>

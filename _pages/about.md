@@ -51,7 +51,7 @@ My research interests include computer vision and robotics.
 
 [Alexey Nekrasov](https://www.vision.rwth-aachen.de/person/262/), **Rui Zhou**, [Miriam Ackermann](https://informatik.rub.de/en/ac-personen/miriam-ackermann/), [Alexander Hermans](https://www.vision.rwth-aachen.de/person/10/), [Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/), [Matthias Rottmann](https://acm.uni-wuppertal.de/de/personen/detail/rottmann/)
 
-[**Project**](https://kumuji.github.io/oodis_website/) <strong><span class='show_paper_citations' data='C3Bk_m8AAAAJ:9yKSN-GCB0IC'></span></strong>
+ICRA 2025 \| [**Project**](https://kumuji.github.io/oodis_website/) <strong><span class='show_paper_citations' data='C3Bk_m8AAAAJ:9yKSN-GCB0IC'></span></strong>
 -  Introduces a benchmark for anomaly instance segmentation in autonomous driving. 
 </div>
 </div>
@@ -63,6 +63,7 @@ My research interests include computer vision and robotics.
 
 **Rui Zhou**, Jialin Hao, Ying Zou, Yushi Zhu, Chi Zhang, [Fusheng Jin](https://pure.bit.edu.cn/en/persons/fusheng-jin/)
 
+ICONIP 2023
 - Knowledge-driven neural network that forecasts time series data by fusing multimodal data. 
 </div>
 </div>
