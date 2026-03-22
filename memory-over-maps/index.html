@@ -404,9 +404,8 @@ layout: null
                   <span>Video</span>
                 </a>
               </span>
-              <!-- TODO: Update with GitHub repo link -->
               <span class="link-block">
-                <a href="#"
+                <a href="https://github.com/RuiZhou-cn/memory-over-maps"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fab fa-github"></i>
@@ -531,10 +530,11 @@ layout: null
       <p>
         <b>Method overview.</b> Given a query and posed RGB-D keyframes:
         <b>(1) Retrieval:</b> SigLIP2 embeddings indexed with FAISS retrieve top-<i>K</i> candidates.
-        <b>(2) VLM Re-Rank:</b> a VLM filters false positives and promotes true matches.
-        <b>(3) 3D Localization:</b> SAM 3 segments the target; masked depth is backprojected, HDBSCAN removes outliers,
-        and multi-view fusion produces a 3D goal estimate. No global 3D map is built.
+        <b>(2) VLM Re-Rank:</b> a VLM filters false positives (red) and promotes true matches (green).
+        <b>(3) 3D Localization:</b> SAM 3 segments the target; masked depth is backprojected, predictions are grouped into object instances,
+        and per-instance multi-view fusion produces a 3D goal estimate. No global 3D map is built.
         <b>(4) Navigation:</b> a PointNav policy navigates directly to the goal.
+        (Scene point cloud shown for visualization only.)
       </p>
     </div>
   </div>
@@ -661,6 +661,10 @@ function buildScenesFromFiles(files) {
 }
 
 const SCENES = buildScenesFromFiles(GLB_FILES);
+
+// Sort scenes: hm3d → goatcore → mp3d → custom
+const DATASET_ORDER = { hm3d: 0, goatcore: 1, mp3d: 2, custom: 3 };
+SCENES.sort((a, b) => (DATASET_ORDER[a.dataset] ?? 99) - (DATASET_ORDER[b.dataset] ?? 99));
 
 // ===================================================================
 // State
