@@ -19,7 +19,7 @@ redirect_from:
 
 # About Me
 My name is Rui Zhou (周睿). I am currently a master's student at [University of Zurich](https://www.uzh.ch/en.html) and [ETH Zurich](https://ethz.ch/en.html) in Computer Science.
-I obtained my bachelor's degree at [Beijing Institute of Technology](https://english.bit.edu.cn). I completed my bachelor's thesis at the [Computer Vision Group at RWTH Aachen University](https://www.vision.rwth-aachen.de/), under the supervision of [Prof. Dr. Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/).
+I obtained my bachelor's degree at [Beijing Institute of Technology](https://english.bit.edu.cn). I completed my bachelor's thesis at the [Computer Vision Group at RWTH Aachen University](https://www.vision.rwth-aachen.de/), under the supervision of [Prof. Dr. Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/) and [Alexey Nekrasov](https://nekrasov.dev/).
 My research interests include computer vision and robotics.
 
 <!-- My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=C3Bk_m8AAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=C3Bk_m8AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>). -->
@@ -27,7 +27,8 @@ My research interests include computer vision and robotics.
 
 # 🔥 News
 <!-- - *2026.03*: &nbsp;🎉🎉 Our paper "In Plain Sight" is available on arXiv! -->
-- *2025.01*: &nbsp;🎉🎉 Our paper Oodis is accepted to ICRA 2025!
+- *2026.05*: &nbsp;🎉🎉 Our paper [Memory Over Maps](https://openreview.net/group?id=IEEE.org/ICRA/2026/Workshop/MM-SpatialAI#tab-recent-activity) is accepted to the [MM-SpatialAI Workshop](https://xingxingzuo.github.io/MM-SpatialAI/) at ICRA 2026 as an **oral**!
+- *2025.01*: &nbsp;🎉🎉 Our paper [OoDIS](https://kumuji.github.io/oodis_website/) is accepted to ICRA 2025!
 - *2023.07*: &nbsp;🎉🎉 Our paper KDSCINet is accepted to ICONIP 2023!
 
 <!-- # 🎖 Honors and Awards
