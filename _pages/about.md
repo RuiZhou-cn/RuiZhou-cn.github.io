@@ -27,6 +27,7 @@ My research interests include computer vision and robotics.
 
 # 🔥 News
 <!-- - *2026.03*: &nbsp;🎉🎉 Our paper "In Plain Sight" is available on arXiv! -->
+- *2026.06*: &nbsp;🎉🎉 Our paper [Memory Over Maps](https://ruizhou-cn.github.io/memory-over-maps/) is accepted to IROS 2026!
 - *2026.05*: &nbsp;🎉🎉 Our paper [Memory Over Maps](https://openreview.net/group?id=IEEE.org/ICRA/2026/Workshop/MM-SpatialAI#tab-recent-activity) is accepted to the [MM-SpatialAI Workshop](https://xingxingzuo.github.io/MM-SpatialAI/) at ICRA 2026 as an **oral**!
 - *2025.01*: &nbsp;🎉🎉 Our paper [OoDIS](https://kumuji.github.io/oodis_website/) is accepted to ICRA 2025!
 - *2023.07*: &nbsp;🎉🎉 Our paper KDSCINet is accepted to ICONIP 2023!
@@ -44,6 +45,18 @@ My research interests include computer vision and robotics.
 - *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 
 # 📝 Publications
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">IROS 2026</div><img src='images/in_plain_sight_teaser.jpg' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Memory Over Maps: 3D Object Localization Without Reconstruction](https://ruizhou-cn.github.io/memory-over-maps/)
+
+**Rui Zhou**, [Xander Yap](https://xanderyap.com/), [Jianwen Cao](https://jianwencao.github.io/), [Allison Lau](https://allison-lau.vercel.app/), [Boyang Sun](https://boysun045.github.io/boysun-website/), [Marc Pollefeys](https://cvg.ethz.ch/team/Prof-Dr-Marc-Pollefeys)
+
+IROS 2026 \| [**Project**](https://ruizhou-cn.github.io/memory-over-maps/)
+- A map-free pipeline that localizes 3D objects from posed RGB-D keyframes via retrieval and VLM re-ranking, replacing dense 3D reconstruction with over 100× faster scene indexing.
+</div>
+</div>
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICRA 2025</div><img src='images/oodis_teaser.jpeg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
