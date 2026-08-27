@@ -1,0 +1,336 @@
+{
+ "scenes": [
+  {
+   "file": "hm3d_4ok3usBNeis.glb",
+   "dataset": "hm3d",
+   "sceneId": "4ok3usBNeis",
+   "label": "HM3D – 4ok3usBNeis",
+   "queries": [
+    {
+     "id": "bed",
+     "label": "Bed",
+     "group": "bed",
+     "node": "q|bed|bed"
+    },
+    {
+     "id": "bed_with_blue_mattress",
+     "label": "Bed With Blue Mattress",
+     "group": "bed",
+     "node": "q|bed|bed_with_blue_mattress"
+    },
+    {
+     "id": "door",
+     "label": "Door",
+     "group": "door",
+     "node": "q|door|door"
+    },
+    {
+     "id": "door_for_bedroom",
+     "label": "Door For Bedroom",
+     "group": "door",
+     "node": "q|door|door_for_bedroom"
+    },
+    {
+     "id": "audio",
+     "label": "Audio",
+     "group": null,
+     "node": "q||audio"
+    },
+    {
+     "id": "mircowave",
+     "label": "Mircowave",
+     "group": null,
+     "node": "q||mircowave"
+    },
+    {
+     "id": "office",
+     "label": "Office",
+     "group": null,
+     "node": "q||office"
+    },
+    {
+     "id": "where_to_cook",
+     "label": "Where To Cook",
+     "group": null,
+     "node": "q||where_to_cook"
+    },
+    {
+     "id": "where_to_listen_to_music",
+     "label": "Where To Listen To Music",
+     "group": null,
+     "node": "q||where_to_listen_to_music"
+    },
+    {
+     "id": "where_to_throw_garbage",
+     "label": "Where To Throw Garbage",
+     "group": null,
+     "node": "q||where_to_throw_garbage"
+    },
+    {
+     "id": "where_to_watch_time",
+     "label": "Where To Watch Time",
+     "group": null,
+     "node": "q||where_to_watch_time"
+    }
+   ]
+  },
+  {
+   "file": "hm3d_TEEsavR23oF.glb",
+   "dataset": "hm3d",
+   "sceneId": "TEEsavR23oF",
+   "label": "HM3D – TEEsavR23oF",
+   "queries": [
+    {
+     "id": "bed",
+     "label": "Bed",
+     "group": "bed",
+     "node": "q|bed|bed"
+    },
+    {
+     "id": "bed_with_cyan_pillow",
+     "label": "Bed With Cyan Pillow",
+     "group": "bed",
+     "node": "q|bed|bed_with_cyan_pillow"
+    },
+    {
+     "id": "black_sofa_for_only_one_person",
+     "label": "Black Sofa For Only One Person",
+     "group": "sofa",
+     "node": "q|sofa|black_sofa_for_only_one_person"
+    },
+    {
+     "id": "sofa",
+     "label": "Sofa",
+     "group": "sofa",
+     "node": "q|sofa|sofa"
+    },
+    {
+     "id": "sofa_next_to_TV",
+     "label": "Sofa Next To TV",
+     "group": "sofa",
+     "node": "q|sofa|sofa_next_to_TV"
+    },
+    {
+     "id": "white_sofa_for_only_one_person",
+     "label": "White Sofa For Only One Person",
+     "group": "sofa",
+     "node": "q|sofa|white_sofa_for_only_one_person"
+    },
+    {
+     "id": "american_flag",
+     "label": "American Flag",
+     "group": null,
+     "node": "q||american_flag"
+    },
+    {
+     "id": "cluttered",
+     "label": "Cluttered",
+     "group": null,
+     "node": "q||cluttered"
+    },
+    {
+     "id": "object_emits_light",
+     "label": "Object Emits Light",
+     "group": null,
+     "node": "q||object_emits_light"
+    },
+    {
+     "id": "work_out_machine",
+     "label": "Work Out Machine",
+     "group": null,
+     "node": "q||work_out_machine"
+    }
+   ]
+  },
+  {
+   "file": "goatcore_nfv.glb",
+   "dataset": "goatcore",
+   "sceneId": "nfv",
+   "label": "GOATCORE – nfv",
+   "queries": [
+    {
+     "id": "cabinet",
+     "label": "Cabinet",
+     "group": "cabinet",
+     "node": "q|cabinet|cabinet"
+    },
+    {
+     "id": "cabinet_below_tv",
+     "label": "Cabinet Below Tv",
+     "group": "cabinet",
+     "node": "q|cabinet|cabinet_below_tv"
+    },
+    {
+     "id": "cabinet_in_kitchen",
+     "label": "Cabinet In Kitchen",
+     "group": "cabinet",
+     "node": "q|cabinet|cabinet_in_kitchen"
+    },
+    {
+     "id": "cozy",
+     "label": "Cozy",
+     "group": null,
+     "node": "q||cozy"
+    },
+    {
+     "id": "where_to_heat_food",
+     "label": "Where To Heat Food",
+     "group": null,
+     "node": "q||where_to_heat_food"
+    }
+   ]
+  },
+  {
+   "file": "mp3d_8194nk5LbLH.glb",
+   "dataset": "mp3d",
+   "sceneId": "8194nk5LbLH",
+   "label": "MP3D – 8194nk5LbLH",
+   "queries": [
+    {
+     "id": "painting",
+     "label": "Painting",
+     "group": "painting",
+     "node": "q|painting|painting"
+    },
+    {
+     "id": "painting_with_horse",
+     "label": "Painting With Horse",
+     "group": "painting",
+     "node": "q|painting|painting_with_horse"
+    },
+    {
+     "id": "place_to_workout",
+     "label": "Place To Workout",
+     "group": null,
+     "node": "q||place_to_workout"
+    },
+    {
+     "id": "plant",
+     "label": "Plant",
+     "group": null,
+     "node": "q||plant"
+    },
+    {
+     "id": "treadmill",
+     "label": "Treadmill",
+     "group": null,
+     "node": "q||treadmill"
+    }
+   ]
+  },
+  {
+   "file": "custom_room1.glb",
+   "dataset": "custom",
+   "sceneId": "room1",
+   "label": "CUSTOM – room1",
+   "queries": [
+    {
+     "id": "robot",
+     "label": "Robot",
+     "group": "robot",
+     "node": "q|robot|robot"
+    },
+    {
+     "id": "robot_with_basket_on_back",
+     "label": "Robot With Basket On Back",
+     "group": "robot",
+     "node": "q|robot|robot_with_basket_on_back"
+    },
+    {
+     "id": "black_jacket",
+     "label": "Black Jacket",
+     "group": null,
+     "node": "q||black_jacket"
+    },
+    {
+     "id": "place_to_cook",
+     "label": "Place To Cook",
+     "group": null,
+     "node": "q||place_to_cook"
+    },
+    {
+     "id": "place_to_sleep",
+     "label": "Place To Sleep",
+     "group": null,
+     "node": "q||place_to_sleep"
+    }
+   ]
+  },
+  {
+   "file": "Lamar_CAB.glb",
+   "dataset": "Lamar",
+   "sceneId": "CAB",
+   "label": "LAMAR – CAB",
+   "queries": [
+    {
+     "id": "people_looking_at_monitor",
+     "label": "People Looking At Monitor",
+     "group": null,
+     "node": "q||people_looking_at_monitor"
+    },
+    {
+     "id": "ping_pong_table",
+     "label": "Ping Pong Table",
+     "group": null,
+     "node": "q||ping_pong_table"
+    },
+    {
+     "id": "sofa",
+     "label": "Sofa",
+     "group": null,
+     "node": "q||sofa"
+    },
+    {
+     "id": "transparent_door",
+     "label": "Transparent Door",
+     "group": null,
+     "node": "q||transparent_door"
+    }
+   ]
+  },
+  {
+   "file": "Lamar_LIN.glb",
+   "dataset": "Lamar",
+   "sceneId": "LIN",
+   "label": "LAMAR – LIN",
+   "queries": [
+    {
+     "id": "Clothe_store",
+     "label": "Clothe Store",
+     "group": null,
+     "node": "q||Clothe_store"
+    },
+    {
+     "id": "bike",
+     "label": "Bike",
+     "group": null,
+     "node": "q||bike"
+    },
+    {
+     "id": "bike_in_front_of_store",
+     "label": "Bike In Front Of Store",
+     "group": null,
+     "node": "q||bike_in_front_of_store"
+    },
+    {
+     "id": "construction_site",
+     "label": "Construction Site",
+     "group": null,
+     "node": "q||construction_site"
+    },
+    {
+     "id": "max_mara_store",
+     "label": "Max Mara Store",
+     "group": null,
+     "node": "q||max_mara_store"
+    },
+    {
+     "id": "pink_burnished_store",
+     "label": "Pink Burnished Store",
+     "group": null,
+     "node": "q||pink_burnished_store"
+    }
+   ]
+  }
+ ]
+}

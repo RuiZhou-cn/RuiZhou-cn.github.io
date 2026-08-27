@@ -19,8 +19,15 @@ layout: null
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- model-viewer for interactive 3D -->
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <!-- three.js for interactive 3D -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 
   <style>
     body {
@@ -107,10 +114,12 @@ layout: null
       position: relative;
     }
 
-    .model-viewer-container model-viewer {
+    .model-viewer-container canvas {
       width: 100%;
       height: 100%;
+      display: block;
       background: #ffffff;
+      touch-action: pan-y;
     }
 
     .viewer-label {
@@ -452,25 +461,7 @@ layout: null
         <div class="loading-overlay" id="loading-overlay">
           <div class="spinner"></div>
         </div>
-        <model-viewer id="qualitative-viewer"
-                      alt="3D Localization Result"
-                      loading="eager"
-                      touch-action="pan-y"
-                      environment-image="legacy"
-                      camera-orbit="180deg 70deg 75%"
-                      field-of-view="30deg"
-                      min-field-of-view="10deg"
-                      max-field-of-view="90deg"
-                      zoom-sensitivity="0.5"
-                      camera-controls
-                      disable-tap
-                      min-camera-orbit="auto auto auto"
-                      max-camera-orbit="auto auto 500%"
-                      interaction-prompt="none"
-                      shadow-intensity="0"
-                      disable-shadow
-                      style="width: 100%; height: 100%; background: #ffffff;">
-        </model-viewer>
+        <canvas id="qualitative-canvas"></canvas>
       </div>
 
   </div>
@@ -575,99 +566,26 @@ layout: null
   </div>
 </footer>
 
-<script>
+<script type="module">
 // ===================================================================
-// Auto-detect scenes & queries from GLB files (populated by Jekyll)
+// Scenes & queries are described by static/glb/manifest.json, which is
+// generated alongside the merged GLBs (one file per scene).
 //
-// Naming convention:
-//   {dataset}_{sceneId}.glb                       → raw scene
-//   {dataset}_{sceneId}_{queryId}.glb             → standalone query
-//   {dataset}_{sceneId}--{group}--{queryId}.glb   → grouped query (for comparison)
+// Each scene GLB contains:
+//   world/geometry_0        -> the shared scene mesh (always visible)
+//   world/"q|<group>|<id>"  -> one node per query (toggled on demand)
 // ===================================================================
-const GLB_FILES = [
-  {%- for file in site.static_files -%}
-    {%- if file.extname == '.glb' and file.path contains '/memory-over-maps/static/glb/' -%}
-  "{{ file.name }}",
-    {%- endif -%}
-  {%- endfor -%}
-];
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+let SCENES = [];
 
 function titleCase(str) {
   return str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
-
-function buildScenesFromFiles(files) {
-  const names = files.map(f => f.replace('.glb', ''));
-  const sceneMap = {};  // "dataset_sceneId" → scene object
-  const scenes = [];
-  const grouped = [];   // names with "--"
-  const ungrouped = []; // names without "--"
-
-  for (const name of names) {
-    if (name.includes('--')) grouped.push(name);
-    else ungrouped.push(name);
-  }
-
-  // Sort ungrouped by length so raw scenes (shorter) are found first
-  ungrouped.sort((a, b) => a.length - b.length);
-
-  // Pass 1: raw scenes and standalone queries
-  for (const name of ungrouped) {
-    let matched = false;
-    for (const scene of scenes) {
-      const prefix = scene.dataset + '_' + scene.sceneId + '_';
-      if (name.startsWith(prefix)) {
-        const qid = name.slice(prefix.length);
-        scene.queries.push({ id: qid, label: titleCase(qid), group: null });
-        matched = true;
-        break;
-      }
-    }
-    if (!matched) {
-      const i = name.indexOf('_');
-      const key = name;
-      const scene = {
-        dataset: name.slice(0, i),
-        sceneId: name.slice(i + 1),
-        label: name.slice(0, i).toUpperCase() + ' \u2013 ' + name.slice(i + 1),
-        queries: []
-      };
-      scenes.push(scene);
-      sceneMap[key] = scene;
-    }
-  }
-
-  // Pass 2: grouped queries (with --)
-  for (const name of grouped) {
-    const parts = name.split('--');
-    if (parts.length < 3) continue;
-    const sceneKey = parts[0];
-    const groupName = parts[1];
-    const queryId = parts.slice(2).join('--');
-
-    let scene = sceneMap[sceneKey];
-    if (!scene) {
-      const i = sceneKey.indexOf('_');
-      scene = {
-        dataset: sceneKey.slice(0, i),
-        sceneId: sceneKey.slice(i + 1),
-        label: sceneKey.slice(0, i).toUpperCase() + ' \u2013 ' + sceneKey.slice(i + 1),
-        queries: []
-      };
-      scenes.push(scene);
-      sceneMap[sceneKey] = scene;
-    }
-    scene.queries.push({ id: queryId, label: titleCase(queryId), group: groupName });
-  }
-
-  return scenes;
-}
-
-const SCENES = buildScenesFromFiles(GLB_FILES);
-
-// Sort scenes: hm3d → goatcore → mp3d → custom
-const DATASET_ORDER = { hm3d: 0, goatcore: 1, mp3d: 2, custom: 3 };
-SCENES.sort((a, b) => (DATASET_ORDER[a.dataset] ?? 99) - (DATASET_ORDER[b.dataset] ?? 99));
 
 // ===================================================================
 // State
@@ -678,50 +596,135 @@ let currentQueryIdx = -1; // -1 = raw scene mesh
 // ===================================================================
 // DOM refs
 // ===================================================================
-const viewer = document.getElementById('qualitative-viewer');
+const canvas = document.getElementById('qualitative-canvas');
+const wrapper = document.getElementById('viewer-wrapper');
 const viewerLabel = document.getElementById('viewer-label');
 const loadingOverlay = document.getElementById('loading-overlay');
 const sceneSelect = document.getElementById('scene-select');
 const querySelectorContainer = document.getElementById('query-selector');
 
 // ===================================================================
-// Build GLB path
+// three.js setup — mirrors the previous <model-viewer> configuration:
+// white background, 30deg FOV, camera-orbit "180deg 70deg 75%",
+// no shadows, zoom sensitivity 0.5.
 // ===================================================================
-function glbPath(scene, query) {
-  const base = `${scene.dataset}_${scene.sceneId}`;
-  if (!query) return `static/glb/${base}.glb`;
-  if (query.group) return `static/glb/${base}--${query.group}--${query.id}.glb`;
-  return `static/glb/${base}_${query.id}.glb`;
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+const scene3d = new THREE.Scene();
+scene3d.background = new THREE.Color(0xffffff);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene3d.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 1000);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.zoomSpeed = 0.5;
+controls.enablePan = true;
+
+const dracoLoader = new DRACOLoader()
+  .setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+const gltfLoader = new GLTFLoader().setDRACOLoader(dracoLoader);
+
+function resize() {
+  const w = wrapper.clientWidth, h = wrapper.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize);
+
+(function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene3d, camera);
+})();
+
+// Frame the scene mesh the way model-viewer's "180deg 70deg 75%" did.
+function frameObject(obj) {
+  const box = new THREE.Box3().setFromObject(obj);
+  if (box.isEmpty()) return;
+  const center = box.getCenter(new THREE.Vector3());
+  const radius = box.getBoundingSphere(new THREE.Sphere()).radius;
+  const fov = THREE.MathUtils.degToRad(camera.fov);
+  const dist = (radius / Math.sin(fov / 2)) * 0.75;
+  const theta = THREE.MathUtils.degToRad(180);
+  const phi = THREE.MathUtils.degToRad(70);
+  camera.position.set(
+    center.x + dist * Math.sin(phi) * Math.sin(theta),
+    center.y + dist * Math.cos(phi),
+    center.z + dist * Math.sin(phi) * Math.cos(theta)
+  );
+  camera.near = Math.max(dist / 1000, 0.01);
+  camera.far = dist * 20;
+  camera.updateProjectionMatrix();
+  controls.target.copy(center);
+  controls.update();
 }
 
 // ===================================================================
-// Update the viewer
+// Scene loading — each scene GLB is fetched once, then cached, so
+// switching queries (and revisiting a scene) costs no network.
 // ===================================================================
+const sceneCache = new Map();   // file -> { root, queryNodes: Map<nodeName, Object3D> }
+let currentRoot = null;
 let _viewerSeq = 0;
 
-function updateViewer() {
-  const seq = ++_viewerSeq;
-  const scene = SCENES[currentSceneIdx];
-  const query = currentQueryIdx >= 0 ? scene.queries[currentQueryIdx] : null;
-
-  loadingOverlay.classList.add('is-loading');
-  viewerLabel.textContent = query
-    ? `${scene.label}  \u2014  \u201c${query.label}\u201d`
-    : `${scene.label}  \u2014  Scene Mesh`;
-
-  const src = glbPath(scene, query);
-
-  if (seq !== _viewerSeq) return; // stale request
-
-  viewer.setAttribute('src', src);
+function loadSceneFile(file) {
+  if (sceneCache.has(file)) return Promise.resolve(sceneCache.get(file));
+  return gltfLoader.loadAsync('static/glb/' + file).then(gltf => {
+    const queryNodes = new Map();
+    gltf.scene.traverse(o => {
+      if (o.name && o.name.startsWith('q|')) { queryNodes.set(o.name, o); o.visible = false; }
+    });
+    const entry = { root: gltf.scene, queryNodes };
+    sceneCache.set(file, entry);
+    return entry;
+  });
 }
 
-viewer.addEventListener('load', () => {
+async function updateViewer() {
+  const seq = ++_viewerSeq;
+  const sceneDef = SCENES[currentSceneIdx];
+  const query = currentQueryIdx >= 0 ? sceneDef.queries[currentQueryIdx] : null;
+
+  viewerLabel.textContent = query
+    ? `${sceneDef.label}  —  “${query.label}”`
+    : `${sceneDef.label}  —  Scene Mesh`;
+
+  const cached = sceneCache.get(sceneDef.file);
+  if (!cached) loadingOverlay.classList.add('is-loading');
+
+  let entry;
+  try {
+    entry = await loadSceneFile(sceneDef.file);
+  } catch (err) {
+    console.error('Failed to load ' + sceneDef.file, err);
+    loadingOverlay.classList.remove('is-loading');
+    return;
+  }
+  if (seq !== _viewerSeq) return;   // a newer request superseded this one
+
+  if (currentRoot !== entry.root) {
+    if (currentRoot) scene3d.remove(currentRoot);
+    scene3d.add(entry.root);
+    currentRoot = entry.root;
+    frameObject(entry.root);
+  }
+
+  for (const node of entry.queryNodes.values()) node.visible = false;
+  if (query) {
+    const node = entry.queryNodes.get(query.node);
+    if (node) node.visible = true;
+    else console.warn('Missing query node: ' + query.node);
+  }
+
   loadingOverlay.classList.remove('is-loading');
-  viewer.cameraOrbit = "180deg 70deg 75%";
-  viewer.jumpCameraToGoal();
-});
-viewer.addEventListener('error', () => loadingOverlay.classList.remove('is-loading'));
+}
 
 // ===================================================================
 // Helpers for pill selection
@@ -854,11 +857,22 @@ function buildQueryPills() {
 // ===================================================================
 // Initialize
 // ===================================================================
-document.addEventListener('DOMContentLoaded', () => {
+(async function init() {
+  resize();
+  try {
+    const res = await fetch('static/glb/manifest.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    SCENES = (await res.json()).scenes;
+  } catch (err) {
+    console.error('Could not load scene manifest', err);
+    loadingOverlay.classList.remove('is-loading');
+    viewerLabel.textContent = 'Failed to load scenes';
+    return;
+  }
   buildSceneDropdown();
   buildQueryPills();
   updateViewer();
-});
+})();
 </script>
 
 </body>
