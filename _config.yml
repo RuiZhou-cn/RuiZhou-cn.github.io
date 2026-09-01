@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Rui Zhou (周睿)"
-description              : "Master Student at University of Zurich and ETH Zurich"
+description              : "Master Student at University of Zürich and ETH Zürich"
 repository               : "RuiZhou-cn/RuiZhou-cn.github.io"
 google_scholar_stats_use_cdn : true
 
@@ -23,8 +23,8 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Rui Zhou (周睿)"
   avatar           : "images/ruizhou_photo.jpg"
-  bio              : "University of Zurich and ETH Zurich"
-  location         : "Zurich, Switzerland"
+  bio              : "University of Zürich and ETH Zürich"
+  location         : "Zürich, Switzerland"
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=SCHOLAR_ID&user=C3Bk_m8AAAAJ"

@@ -18,7 +18,7 @@ redirect_from:
 <span class='anchor' id='about-me'></span>
 
 # About Me
-My name is Rui Zhou (周睿). I am currently a master's student at [University of Zurich](https://www.uzh.ch/en.html) and [ETH Zurich](https://ethz.ch/en.html) in Computer Science.
+My name is Rui Zhou (周睿). I am currently a master's student at [University of Zürich](https://www.uzh.ch/en.html) and [ETH Zürich](https://ethz.ch/en.html) in Computer Science.
 I obtained my bachelor's degree at [Beijing Institute of Technology](https://english.bit.edu.cn). I completed my bachelor's thesis at the [Computer Vision Group at RWTH Aachen University](https://www.vision.rwth-aachen.de/), under the supervision of [Prof. Dr. Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/) and [Alexey Nekrasov](https://nekrasov.dev/).
 My research interests include computer vision and robotics.
 
@@ -37,7 +37,7 @@ My research interests include computer vision and robotics.
 - *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
 
 # 📖 Educations
-- *2024.06 - Present*, Graduate, Department of Computer Science, University of Zurich and ETH Zurich, Zurich, Switzerland.
+- *2024.06 - Present*, Graduate, Department of Computer Science, University of Zürich and ETH Zürich, Zürich, Switzerland.
 - *2020.09 - 2024.06*, Undergraduate, School of Computer Science & Technology, Beijing Institute of Technology, Beijing, China.
 
 <!-- # 💬 Invited Talks
