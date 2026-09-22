@@ -1,0 +1,485 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Elevator-VIGS: Separating Elevator Motion from Robot Motion in Visual-Inertial Gaussian Splatting SLAM">
+  <meta name="keywords" content="SLAM, Visual-Inertial Odometry, Gaussian Splatting, Elevator, Multi-Floor Localization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elevator-VIGS: Separating Elevator Motion from Robot Motion in Visual-Inertial Gaussian Splatting SLAM</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors a {
+      color: hsl(204, 86%, 53%) !important;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+    }
+
+    .publication-venue {
+      color: #555;
+      width: fit-content;
+      font-weight: bold;
+    }
+
+    .link-block a {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    /* 16:9 box for the YouTube embed */
+    .publication-video {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      border-radius: 10px !important;
+    }
+
+    .publication-video iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Tighter vertical rhythm between sections */
+    .section {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .method-image {
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .dataset-video,
+    .teaser-video {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* red circled digits matching the badges in the pipeline figure */
+    .bdg {
+      color: #C8102E;
+      font-weight: bold;
+    }
+
+    .tldr {
+      background-color: #f5f5f5;
+      padding: 12px 16px;
+      border-left: 4px solid #C8102E;
+      border-radius: 4px;
+      color: #000;
+    }
+
+    /* sequence selector bar above the hero video (same style as memory-over-maps' scene bar) */
+    .seq-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .seq-bar label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #363636;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+    }
+    .seq-dropdown {
+      font-size: 15px;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 2px solid #dbdbdb;
+      background: #fff;
+      color: #363636;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.25s;
+      min-width: 240px;
+    }
+    .seq-dropdown:hover,
+    .seq-dropdown:focus {
+      border-color: #3273dc;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="nav-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="nav-menu" class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://ruizhou-cn.github.io/" aria-label="Homepage">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More Research</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://ruizhou-cn.github.io/memory-over-maps/">Memory Over Maps &mdash; IROS 2026</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    var burger = document.querySelector('.navbar-burger');
+    burger.addEventListener('click', function () {
+      burger.classList.toggle('is-active');
+      document.getElementById('nav-menu').classList.toggle('is-active');
+    });
+  })();
+</script>
+
+<!-- Title & Authors -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="white-space: nowrap;">Elevator-VIGS:</h1>
+          <h1 class="title is-2 publication-title" style="margin-top: 0; margin-bottom: 0">Separating Elevator Motion from Robot Motion in&nbsp;Visual-Inertial Gaussian Splatting SLAM</h1>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 1.5rem;">
+            <span class="author-block">
+              <a href="https://ruizhou-cn.github.io/">Rui&nbsp;Zhou</a><sup>1*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://zzh2000.github.io/">Zihan&nbsp;Zhu</a><sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://www.ifp.uni-stuttgart.de/en/institute/team/Zhang-00004/">Wei&nbsp;Zhang</a><sup>3</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/zizhou-luo-b34320268/">Zizhou&nbsp;Luo</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://www.ifp.uni-stuttgart.de/institut/team/Haala-00001/">Norbert&nbsp;Haala</a><sup>3</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://people.inf.ethz.ch/pomarc/">Marc&nbsp;Pollefeys</a><sup>2,4</sup></span>
+          </div>
+          <div class="is-size-5 publication-authors" style="margin-top: 0.75rem;">
+            <span class="author-block"><sup>1</sup>University of Zurich</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>ETH Zürich</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>3</sup>University of Stuttgart</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>4</sup>Microsoft</span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2609.23491"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://youtu.be/3-TDg8bdD68"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- TODO: confirm the repository name once the code is public -->
+              <span class="link-block">
+                <a href="https://github.com/RuiZhou-cn/elevator-vigs"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/Rui5125/Elevator-VIGS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <span style="font-size: 1.1em; line-height: 1;">&#129303;</span>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser video + TL;DR -->
+<section class="section" style="padding-top: 0;">
+  <div class="container is-max-desktop">
+    <div class="seq-bar">
+      <label for="seq-select">Sequence:</label>
+      <select id="seq-select" class="seq-dropdown">
+        <optgroup label="Real-world">
+          <option value="Office1" data-src="static/videos/seq/Office1.mp4" data-poster="static/images/seq/Office1.jpg">Office1</option>
+          <option value="Office2" data-src="static/videos/seq/Office2.mp4" data-poster="static/images/seq/Office2.jpg">Office2</option>
+          <option value="Office3" data-src="static/videos/seq/Office3.mp4" data-poster="static/images/seq/Office3.jpg">Office3</option>
+          <option value="Office4" data-src="static/videos/seq/Office4.mp4" data-poster="static/images/seq/Office4.jpg">Office4</option>
+          <option value="Station1" data-src="static/videos/seq/Station1.mp4" data-poster="static/images/seq/Station1.jpg">Station1</option>
+          <option value="Station2" data-src="static/videos/seq/Station2.mp4" data-poster="static/images/seq/Station2.jpg">Station2</option>
+          <option value="Station3" data-src="static/videos/seq/Station3.mp4" data-poster="static/images/seq/Station3.jpg">Station3</option>
+          <option value="Residential1" data-src="static/videos/seq/Residential1.mp4" data-poster="static/images/seq/Residential1.jpg">Residential1</option>
+          <option value="Residential2" data-src="static/videos/seq/Residential2.mp4" data-poster="static/images/seq/Residential2.jpg">Residential2</option>
+          <option value="Residential3" data-src="static/videos/seq/Residential3.mp4" data-poster="static/images/seq/Residential3.jpg">Residential3</option>
+          <option value="Campus1" data-src="static/videos/seq/Campus1.mp4" data-poster="static/images/seq/Campus1.jpg">Campus1</option>
+          <option value="Campus2" data-src="static/videos/seq/Campus2.mp4" data-poster="static/images/seq/Campus2.jpg">Campus2</option>
+          <option value="Campus3" data-src="static/videos/seq/Campus3.mp4" data-poster="static/images/seq/Campus3.jpg">Campus3</option>
+          <option value="Campus4" data-src="static/videos/seq/Campus4.mp4" data-poster="static/images/seq/Campus4.jpg">Campus4</option>
+          <option value="Campus5" data-src="static/videos/seq/Campus5.mp4" data-poster="static/images/seq/Campus5.jpg">Campus5</option>
+          <option value="Campus6" data-src="static/videos/seq/Campus6.mp4" data-poster="static/images/seq/Campus6.jpg" selected>Campus6</option>
+        </optgroup>
+        <optgroup label="Simulated">
+          <option value="Office1-E" data-src="static/videos/seq/Office1-E.mp4" data-poster="static/images/seq/Office1-E.jpg">Office1-E</option>
+          <option value="Office1-M" data-src="static/videos/seq/Office1-M.mp4" data-poster="static/images/seq/Office1-M.jpg">Office1-M</option>
+          <option value="Office1-H" data-src="static/videos/seq/Office1-H.mp4" data-poster="static/images/seq/Office1-H.jpg">Office1-H</option>
+          <option value="Office1-Walk" data-src="static/videos/seq/Office1-Walk.mp4" data-poster="static/images/seq/Office1-Walk.jpg">Office1-Walk</option>
+          <option value="Office2-E" data-src="static/videos/seq/Office2-E.mp4" data-poster="static/images/seq/Office2-E.jpg">Office2-E</option>
+          <option value="Office2-M" data-src="static/videos/seq/Office2-M.mp4" data-poster="static/images/seq/Office2-M.jpg">Office2-M</option>
+          <option value="Office2-H" data-src="static/videos/seq/Office2-H.mp4" data-poster="static/images/seq/Office2-H.jpg">Office2-H</option>
+          <option value="Office2-Walk" data-src="static/videos/seq/Office2-Walk.mp4" data-poster="static/images/seq/Office2-Walk.jpg">Office2-Walk</option>
+          <option value="Mall-E" data-src="static/videos/seq/Mall-E.mp4" data-poster="static/images/seq/Mall-E.jpg">Mall-E</option>
+          <option value="Mall-M" data-src="static/videos/seq/Mall-M.mp4" data-poster="static/images/seq/Mall-M.jpg">Mall-M</option>
+          <option value="Mall-H" data-src="static/videos/seq/Mall-H.mp4" data-poster="static/images/seq/Mall-H.jpg">Mall-H</option>
+          <option value="Mall-Walk" data-src="static/videos/seq/Mall-Walk.mp4" data-poster="static/images/seq/Mall-Walk.jpg">Mall-Walk</option>
+          <option value="Factory-E" data-src="static/videos/seq/Factory-E.mp4" data-poster="static/images/seq/Factory-E.jpg">Factory-E</option>
+          <option value="Factory-M" data-src="static/videos/seq/Factory-M.mp4" data-poster="static/images/seq/Factory-M.jpg">Factory-M</option>
+          <option value="Factory-H" data-src="static/videos/seq/Factory-H.mp4" data-poster="static/images/seq/Factory-H.jpg">Factory-H</option>
+          <option value="Factory-Walk" data-src="static/videos/seq/Factory-Walk.mp4" data-poster="static/images/seq/Factory-Walk.jpg">Factory-Walk</option>
+        </optgroup>
+      </select>
+    </div>
+    <video id="hero-video" class="teaser-video" autoplay loop muted playsinline controls
+           poster="static/images/seq/Campus6.jpg">
+      <source src="static/videos/seq/Campus6.mp4" type="video/mp4">
+    </video>
+    <div class="content has-text-justified" style="margin-top: 1rem;">
+      <p class="tldr">
+        <b>TL;DR:</b> We present Elevator-VIGS, a visual-inertial 3D Gaussian Splatting SLAM system that keeps
+        tracking and mapping through elevator rides, achieving <b>state-of-the-art tracking and rendering
+        performance</b> on real-world and simulated elevator sequences.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Abstract</h2>
+    <div class="content has-text-justified">
+      <p>
+        We present Elevator-VIGS, a visual-inertial 3D Gaussian Splatting SLAM system that keeps tracking and
+        mapping through elevator rides. Inside a moving elevator, the two sensors are in conflict. The camera
+        sees only the robot's motion relative to the elevator, while the IMU senses that motion plus the
+        elevator's motion relative to the world. This conflict is challenging for existing visual-inertial
+        estimators. If vision dominates, the estimator tracks only the robot's motion within the
+        elevator and misses the elevator's rise, and if the conflict remains, the estimator diverges. We observe that the
+        conflict comes from forcing both observations into a single coordinate frame. We instead estimate the
+        robot's pose in the elevator's coordinate frame, and the elevator's motion relative to the world as a
+        per-keyframe <i>transport state</i>, the elevator's rise and vertical velocity, within dense
+        visual-inertial bundle adjustment. Elevator-VIGS detects rides zero-shot with a vision-language model and a depth network, and constrains the transport state at the departure and the arrival. We
+        record real-world and simulated elevator sequences. On these sequences, Elevator-VIGS achieves
+        state-of-the-art tracking and rendering performance. On four elevator-free public benchmarks it keeps
+        the state-of-the-art performance of VIGS-SLAM.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Video -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Video</h2>
+    <div class="publication-video">
+      <iframe src="https://www.youtube.com/embed/3-TDg8bdD68"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Method Overview -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <img src="static/images/pipeline.png?v=04a5fd25" alt="Elevator-VIGS system overview" class="method-image">
+    <div class="content has-text-justified" style="margin-top: 1rem;">
+      <p>
+        <b>System overview.</b> Elevator-VIGS takes RGB frames and IMU readings as input, tracks the camera
+        online and trains a Gaussian map in parallel, extending VIGS-SLAM with the components outlined in red.
+        Each keyframe, selected by optical flow and initialized through IMU preintegration, holds VIGS-SLAM's
+        15-dimensional state of pose, velocity and bias together with its disparities. In the frontend, a
+        ConvGRU refines the dense visual correspondences iteratively, and visual-inertial bundle adjustment
+        optimizes the sliding window at every new keyframe. The ride detector&nbsp;<span
+        class="bdg">&#10106;</span> arms on a semantic and a geometric cue from the RGB frames, and the IMU
+        detects the departure and the arrival within the armed window. From the departure until the fold, each
+        keyframe's position and velocity decompose into an elevator-frame part and the transport
+        state&nbsp;<span class="bdg">&#10102;</span>, the elevator's rise and vertical velocity. The solve then
+        widens to 17 dimensions, the departure and arrival constraints&nbsp;<span class="bdg">&#10103;</span>
+        constrain the transport state, and the update projection&nbsp;<span class="bdg">&#10104;</span>
+        preserves the transport state through every optimization. Once the keyframes from the elevator leave the
+        sliding window, the deferred fold&nbsp;<span class="bdg">&#10105;</span> writes the rise into the poses
+        and returns them to the world frame. The mapper initializes Gaussians from each new keyframe's depth and
+        refines the map with color and depth rendering losses. Loop closure proposes keyframe pairs from optical
+        flow, a same-floor gate&nbsp;<span class="bdg">&#10107;</span> rejects pairs on different floors, and
+        each detected loop triggers pose-graph bundle adjustment and a Gaussian update.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Dataset -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Dataset</h2>
+    <div class="content has-text-justified">
+      <p>
+        We release the Elevator-VIGS dataset, 16 real-world elevator sequences with a laser-measured
+        floor-to-floor height as reference and 16 simulated elevator sequences with ground truth through the
+        ride. The data is available for download
+        <a href="https://huggingface.co/datasets/Rui5125/Elevator-VIGS">here</a>.
+      </p>
+    </div>
+    <video class="dataset-video" autoplay loop muted playsinline preload="metadata"
+           poster="static/images/dataset_poster.jpg">
+      <source src="static/videos/dataset_grid.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{zhou2026elevatorvigsseparatingelevatormotion,
+      title={Elevator-VIGS: Separating Elevator Motion from Robot Motion in Visual-Inertial Gaussian Splatting SLAM},
+      author={Rui Zhou and Zihan Zhu and Wei Zhang and Zizhou Luo and Norbert Haala and Marc Pollefeys},
+      year={2026},
+      eprint={2609.23491},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2609.23491},
+}</code></pre>
+  </div>
+</section>
+
+<!-- Acknowledgements -->
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">Acknowledgements</h2>
+    <p>
+      Elevator-VIGS is built on <a href="https://arxiv.org/abs/2512.02293">VIGS-SLAM</a>, the visual-inertial
+      Gaussian Splatting SLAM system this work extends through the ride. It in turn builds on
+      <a href="https://github.com/princeton-vl/DROID-SLAM">DROID-SLAM</a>,
+      <a href="https://github.com/EPFL-VILAB/omnidata">Omnidata</a> and
+      <a href="https://github.com/graphdeco-inria/gaussian-splatting">3D Gaussian Splatting</a>.
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            This webpage template is from <a href="https://nerfies.github.io/">Nerfies</a>.
+            We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var video = document.getElementById('hero-video');
+    var source = video.querySelector('source');
+    var select = document.getElementById('seq-select');
+
+    function show(play) {
+      var opt = select.options[select.selectedIndex];
+      if (source.getAttribute('src') === opt.dataset.src) return;
+      video.poster = opt.dataset.poster;
+      source.setAttribute('src', opt.dataset.src);
+      video.load();
+      if (play) video.play().catch(function () {});
+    }
+    select.addEventListener('change', function () { show(true); });
+
+    // every video restarts on its own when it ends, in case the browser drops
+    // the loop (long files, a manual seek to the very end)
+    Array.prototype.forEach.call(document.querySelectorAll('video'), function (v) {
+      v.loop = true;
+      v.addEventListener('ended', function () {
+        v.currentTime = 0;
+        v.play().catch(function () {});
+      });
+    });
+
+    // ?seq=<name> preselects a sequence (used by the README links)
+    var want = new URLSearchParams(window.location.search).get('seq');
+    if (want && select.querySelector('option[value="' + want + '"]')) {
+      select.value = want;
+      show(false);
+    }
+  })();
+</script>
+</body>
+</html>

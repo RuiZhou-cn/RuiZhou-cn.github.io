@@ -18,9 +18,10 @@ redirect_from:
 <span class='anchor' id='about-me'></span>
 
 # About Me
-My name is Rui Zhou (周睿). I am currently a master's student at [University of Zürich](https://www.uzh.ch/en.html) and [ETH Zürich](https://ethz.ch/en.html) in Computer Science.
+My name is Rui Zhou (周睿). I am currently a master's student at [University of Zurich](https://www.uzh.ch/en.html) in Computer Science.
+I work with [Prof. Marc Pollefeys](https://people.inf.ethz.ch/pomarc/), [Zihan Zhu](https://zzh2000.github.io/), and [Boyang Sun](https://boysun045.github.io/boysun-website/) for my current research in the [Computer Vision and Geometry Group (CVG)](https://cvg.ethz.ch/) at ETH Zürich.
 I obtained my bachelor's degree at [Beijing Institute of Technology](https://english.bit.edu.cn). I completed my bachelor's thesis at the [Computer Vision Group at RWTH Aachen University](https://www.vision.rwth-aachen.de/), under the supervision of [Prof. Dr. Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/) and [Alexey Nekrasov](https://nekrasov.dev/).
-My research interests include computer vision and robotics.
+My research interest lies in the intersection between computer vision and robotics.
 
 <!-- My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=C3Bk_m8AAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=C3Bk_m8AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>). -->
 
@@ -37,7 +38,7 @@ My research interests include computer vision and robotics.
 - *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
 
 # 📖 Educations
-- *2024.06 - Present*, Graduate, Department of Computer Science, University of Zürich and ETH Zürich, Zürich, Switzerland.
+- *2024.06 - Present*, Graduate, Department of Computer Science, University of Zurich, Zürich, Switzerland.
 - *2020.09 - 2024.06*, Undergraduate, School of Computer Science & Technology, Beijing Institute of Technology, Beijing, China.
 
 <!-- # 💬 Invited Talks
@@ -46,12 +47,28 @@ My research interests include computer vision and robotics.
 
 # 📝 Publications
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">IROS 2026</div><img src='images/in_plain_sight_teaser.jpg' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arXiv</div><video src='elevator-vigs/static/videos/seq/Campus6.mp4' poster='elevator-vigs/static/images/seq/Campus6.jpg' autoplay loop muted playsinline width="100%"></video></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Elevator-VIGS: Separating Elevator Motion from Robot Motion in Visual-Inertial Gaussian Splatting SLAM](https://ruizhou-cn.github.io/elevator-vigs/)
+
+**Rui Zhou**\*, [Zihan Zhu](https://zzh2000.github.io/)\*, [Wei Zhang](https://www.ifp.uni-stuttgart.de/en/institute/team/Zhang-00004/), [Zizhou Luo](https://www.linkedin.com/in/zizhou-luo-b34320268/), [Norbert Haala](https://www.ifp.uni-stuttgart.de/institut/team/Haala-00001/), [Marc Pollefeys](https://cvg.ethz.ch/team/Prof-Dr-Marc-Pollefeys)
+
+( \* equal contribution)
+
+arXiv 2026 \| [**Project**](https://ruizhou-cn.github.io/elevator-vigs/)
+- A visual-inertial 3D Gaussian Splatting SLAM system that keeps tracking and mapping through elevator rides by estimating the elevator's motion as a per-keyframe transport state.
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">IROS 2026</div><video src='memory-over-maps/static/videos/iros_video.mp4' poster='memory-over-maps/static/images/iros_video_poster.jpg' autoplay loop muted playsinline width="100%"></video></div></div>
 <div class='paper-box-text' markdown="1">
 
 [Memory Over Maps: 3D Object Localization Without Reconstruction](https://ruizhou-cn.github.io/memory-over-maps/)
 
-**Rui Zhou**, [Xander Yap](https://xanderyap.com/), [Jianwen Cao](https://jianwencao.github.io/), [Allison Lau](https://allison-lau.vercel.app/), [Boyang Sun](https://boysun045.github.io/boysun-website/), [Marc Pollefeys](https://cvg.ethz.ch/team/Prof-Dr-Marc-Pollefeys)
+**Rui Zhou**\*, [Xander Yap](https://xanderyap.com/)\*, [Jianwen Cao](https://jianwencao.github.io/), [Allison Lau](https://allison-lau.vercel.app/), [Boyang Sun](https://boysun045.github.io/boysun-website/), [Marc Pollefeys](https://cvg.ethz.ch/team/Prof-Dr-Marc-Pollefeys)
+
+( \* equal contribution)
 
 IROS 2026 \| [**Project**](https://ruizhou-cn.github.io/memory-over-maps/)
 - A map-free pipeline that localizes 3D objects from posed RGB-D keyframes via retrieval and VLM re-ranking, replacing dense 3D reconstruction with over 100× faster scene indexing.
@@ -65,7 +82,7 @@ IROS 2026 \| [**Project**](https://ruizhou-cn.github.io/memory-over-maps/)
 
 [Alexey Nekrasov](https://www.vision.rwth-aachen.de/person/262/), **Rui Zhou**, [Miriam Ackermann](https://informatik.rub.de/en/ac-personen/miriam-ackermann/), [Alexander Hermans](https://www.vision.rwth-aachen.de/person/10/), [Bastian Leibe](https://www.vision.rwth-aachen.de/person/1/), [Matthias Rottmann](https://acm.uni-wuppertal.de/de/personen/detail/rottmann/)
 
-ICRA 2025 \| [**Project**](https://kumuji.github.io/oodis_website/) <strong><span class='show_paper_citations' data='C3Bk_m8AAAAJ:9yKSN-GCB0IC'></span></strong>
+ICRA 2025 \| [**Project**](https://kumuji.github.io/oodis_website/)
 -  Introduces a benchmark for anomaly instance segmentation in autonomous driving. 
 </div>
 </div>

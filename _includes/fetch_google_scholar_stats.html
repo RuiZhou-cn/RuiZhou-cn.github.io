@@ -7,12 +7,26 @@
         {% endif %}
         $.getJSON(gsDataBaseUrl + "google-scholar-stats/gs_data.json", function (data) {
             var totalCitation = data['citedby']
-            document.getElementById('total_cit').innerHTML = totalCitation;
-            var citationEles = document.getElementsByClassName('show_paper_citations')
-            Array.prototype.forEach.call(citationEles, element => {
-                var paperId = element.getAttribute('data')
-                var numCitations = data['publications'][paperId]['num_citations']
-                element.innerHTML = '| Citations: ' + numCitations;
+            var totalCitEle = document.getElementById('total_cit')   // only present if the page shows the total
+            if (totalCitEle) totalCitEle.innerHTML = totalCitation;
+            // Each paper box is matched to its Scholar entry by title (its first line),
+            // ignoring case and punctuation, and the count is appended to its last line.
+            // An explicit <span class='show_paper_citations' data='PUB_ID'> in the box
+            // overrides the match, for a title that differs from Scholar's.
+            var normTitle = t => t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            var byTitle = {};
+            Object.values(data['publications']).forEach(p => { byTitle[normTitle(p['bib']['title'])] = p; });
+            document.querySelectorAll('.paper-box-text').forEach(box => {
+                var span = box.querySelector('.show_paper_citations');
+                var paper = span ? data['publications'][span.getAttribute('data')]
+                                 : byTitle[normTitle(box.querySelector('p').textContent)];
+                if (!paper || !paper['num_citations']) return;   // not on Scholar yet, or not cited yet
+                if (!span) {
+                    var lines = box.querySelectorAll(':scope > p');
+                    lines[lines.length - 1].insertAdjacentHTML('beforeend', " <strong><span class='show_paper_citations'></span></strong>");
+                    span = box.querySelector('.show_paper_citations');
+                }
+                span.innerHTML = '| Citations: ' + paper['num_citations'];
             });
         });
     })

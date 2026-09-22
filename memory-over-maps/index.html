@@ -359,6 +359,40 @@ layout: null
 
 <body>
 
+<!-- Navbar -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="nav-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="nav-menu" class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://ruizhou-cn.github.io/" aria-label="Homepage">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More Research</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://ruizhou-cn.github.io/elevator-vigs/">Elevator-VIGS &mdash; arXiv 2026</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    var burger = document.querySelector('.navbar-burger');
+    burger.addEventListener('click', function () {
+      burger.classList.toggle('is-active');
+      document.getElementById('nav-menu').classList.toggle('is-active');
+    });
+  })();
+</script>
+
 <!-- Title & Authors -->
 <section class="hero">
   <div class="hero-body">
@@ -389,7 +423,7 @@ layout: null
             <h2 class="is-size-6"><sup>*</sup>Equal contribution</h2>
           </div>
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Zürich</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>1</sup>University of Zurich</span>&nbsp;&nbsp;
             <span class="author-block"><sup>2</sup>ETH Zürich</span>&nbsp;&nbsp;
             <span class="author-block"><sup>3</sup>Microsoft</span>
           </div>
@@ -472,7 +506,7 @@ layout: null
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Video</h2>
     <div class="publication-video">
-      <iframe src="https://www.youtube.com/embed/LOPlDtYiDms"
+      <iframe src="https://www.youtube.com/embed/LOPlDtYiDms" loading="lazy"
               frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
@@ -516,7 +550,7 @@ layout: null
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Method Overview</h2>
-    <img src="static/images/method.jpg" alt="Method overview pipeline" class="method-image">
+    <img src="static/images/method.jpg" alt="Method overview pipeline" class="method-image" loading="lazy">
     <div class="content has-text-justified" style="margin-top: 1rem;">
       <p>
         <b>Method overview.</b> Given a query and posed RGB-D keyframes:
@@ -629,20 +663,31 @@ const dracoLoader = new DRACOLoader()
   .setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
 const gltfLoader = new GLTFLoader().setDRACOLoader(dracoLoader);
 
+// Render on demand instead of every frame: only when the camera moves
+// (controls fire 'change', also while damping settles) or the shown
+// content changes, so an idle viewer costs no GPU time.
+let renderRequested = false;
+function render() {
+  renderRequested = false;
+  controls.update();
+  renderer.render(scene3d, camera);
+}
+function requestRender() {
+  if (renderRequested) return;
+  renderRequested = true;
+  requestAnimationFrame(render);
+}
+controls.addEventListener('change', requestRender);
+
 function resize() {
   const w = wrapper.clientWidth, h = wrapper.clientHeight;
   if (!w || !h) return;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
+  requestRender();
 }
 window.addEventListener('resize', resize);
-
-(function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene3d, camera);
-})();
 
 // Frame the scene mesh the way model-viewer's "180deg 70deg 75%" did.
 function frameObject(obj) {
@@ -667,15 +712,42 @@ function frameObject(obj) {
 }
 
 // ===================================================================
-// Scene loading — each scene GLB is fetched once, then cached, so
-// switching queries (and revisiting a scene) costs no network.
+// Scene loading — a decoded scene holds 30-100 MB of geometry on both
+// CPU and GPU, so only the MAX_CACHED_SCENES most recently shown scenes
+// stay decoded (switching queries and flipping back costs nothing).
+// Older scenes are disposed and re-parsed from the HTTP cache on revisit.
 // ===================================================================
-const sceneCache = new Map();   // file -> { root, queryNodes: Map<nodeName, Object3D> }
+const MAX_CACHED_SCENES = 2;
+const sceneCache = new Map();   // file -> { root, queryNodes: Map<nodeName, Object3D> }, oldest first
 let currentRoot = null;
 let _viewerSeq = 0;
 
+function disposeScene(root) {
+  root.traverse(o => {
+    if (o.geometry) o.geometry.dispose();
+    for (const m of [].concat(o.material || [])) {
+      for (const v of Object.values(m)) if (v && v.isTexture) v.dispose();
+      m.dispose();
+    }
+  });
+}
+
+function evictScenes() {
+  for (const [file, entry] of sceneCache) {
+    if (sceneCache.size <= MAX_CACHED_SCENES) break;
+    if (entry.root === currentRoot) continue;
+    sceneCache.delete(file);
+    disposeScene(entry.root);
+  }
+}
+
 function loadSceneFile(file) {
-  if (sceneCache.has(file)) return Promise.resolve(sceneCache.get(file));
+  const cached = sceneCache.get(file);
+  if (cached) {
+    sceneCache.delete(file);      // re-insert to mark as most recently used
+    sceneCache.set(file, cached);
+    return Promise.resolve(cached);
+  }
   return gltfLoader.loadAsync('static/glb/' + file).then(gltf => {
     const queryNodes = new Map();
     gltf.scene.traverse(o => {
@@ -714,6 +786,7 @@ async function updateViewer() {
     scene3d.add(entry.root);
     currentRoot = entry.root;
     frameObject(entry.root);
+    evictScenes();
   }
 
   for (const node of entry.queryNodes.values()) node.visible = false;
@@ -724,6 +797,7 @@ async function updateViewer() {
   }
 
   loadingOverlay.classList.remove('is-loading');
+  requestRender();
 }
 
 // ===================================================================

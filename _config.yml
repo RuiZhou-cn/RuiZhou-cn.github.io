@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Rui Zhou (周睿)"
-description              : "Master Student at University of Zürich and ETH Zürich"
+description              : "Master Student at University of Zurich."
 repository               : "RuiZhou-cn/RuiZhou-cn.github.io"
 google_scholar_stats_use_cdn : true
 
@@ -23,7 +23,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Rui Zhou (周睿)"
   avatar           : "images/ruizhou_photo.jpg"
-  bio              : "University of Zürich and ETH Zürich"
+  bio              : "University of Zurich"
   location         : "Zürich, Switzerland"
   employer         :
   pubmed           : 
@@ -81,6 +81,9 @@ exclude:
   - Gruntfile.js
   - LICENSE
   - README
+  - CLAUDE.md
+  - AGENTS.md
+  - run_server.sh
   - Rakefile
   - assets/js/_main.js
   - assets/js/plugins
